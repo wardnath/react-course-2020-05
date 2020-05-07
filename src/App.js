@@ -2,8 +2,17 @@ import React from "react";
 import WeatherReport from "/src/WeatherReport";
 import "./styles.css";
 
-function NoWeather() {
-  return <div>No weather to show...</div>;
+function SelectWeather(props) {
+  let { city, handleChange, handleSubmit } = props;
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        Location:
+        <input type="text" value={city} onChange={handleChange} />
+      </label>
+      <input type="submit" value="Submit" />
+    </form>
+  );
 }
 
 class App extends React.Component {
@@ -33,21 +42,14 @@ class App extends React.Component {
       <div className="App">
         <h1>Weather App</h1>
         <h2>Enter location for 5 day weather forecast</h2>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Location:
-            <input
-              type="text"
-              value={this.state.value}
-              onChange={this.handleChange}
-            />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
         {this.state.showWeather ? (
           <WeatherReport city={this.state.city} />
         ) : (
-          <NoWeather />
+          <SelectWeather
+            city={this.state.city}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+          />
         )}
       </div>
     );
