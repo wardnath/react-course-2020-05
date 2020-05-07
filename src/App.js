@@ -1,21 +1,30 @@
 import React from "react";
+import WeatherReport from "/src/WeatherReport";
 import "./styles.css";
+
+function NoWeather() {
+  return <div>No weather to show...</div>;
+}
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: "" };
+    this.state = {
+      city: "",
+      showWeather: false
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange(event) {
-    this.setState({ value: event.target.value });
+    this.setState({ city: event.target.value });
   }
 
   handleSubmit(event) {
-    alert("A name was submitted: " + this.state.value);
+    this.setState({ showWeather: true });
+    alert("A name was submitted: " + this.state.city);
     event.preventDefault();
   }
 
@@ -35,6 +44,11 @@ class App extends React.Component {
           </label>
           <input type="submit" value="Submit" />
         </form>
+        {this.state.showWeather ? (
+          <WeatherReport city={this.state.city} />
+        ) : (
+          <NoWeather />
+        )}
       </div>
     );
   }
